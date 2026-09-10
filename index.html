@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 
   /* ---------- Tokens ---------- DEPLOY */
@@ -77,13 +79,13 @@
   }
 
   /* ---------- Header ---------- */
-.site-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  z-index:100;
-  background:rgba(0,0,0,0.85);
-  border-bottom:1px solid var(--line);
-}
+  .site-header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(0,0,0,0.85);
+    border-bottom:1px solid var(--line);
+  }
   .site-header .wrap{
     display:flex;
     align-items:center;
@@ -91,11 +93,11 @@
     height:76px;
   }
   .brand{ display:flex; align-items:center; gap:12px; }
-.brand img{
-  height:55px; /* try 50–70px depending on taste */
-  width:auto;
-  mix-blend-mode:screen;
-}
+  .brand img{
+    height:55px;
+    width:auto;
+    mix-blend-mode:screen;
+  }
   .brand-name{
     font-family:var(--display);
     font-weight:700;
@@ -178,40 +180,34 @@
     object-position:70% 30%;
     filter:saturate(1.05);
   }
-.hero-media::before{
-  background:
-    linear-gradient(180deg,
-      rgba(7,4,12,0.20) 0%,
-      rgba(7,4,12,0.70) 45%,
-      rgba(7,4,12,0.98) 95%
-    ),
-    linear-gradient(100deg,
-      rgba(0,0,0,0.65) 0%,
-      rgba(0,0,0,0.15) 60%
-    );
-}
-.hero-media::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-
-  background:
-    /* left fade */
-    linear-gradient(to right,
-      rgba(7,4,12,0.85) 0%,
-      rgba(7,4,12,0.0) 90%
-    ),
-
-    /* right fade */
-    linear-gradient(to left,
-      rgba(7,4,12,0.85) 0%,
-      rgba(7,4,12,0.0) 90%
-    ),
-
-    /* optional subtle purple glow (you already had this vibe) */
-    radial-gradient(ellipse 60% 45% at 15% 100%, rgba(168,85,247,0.25), transparent 70%);
-}
+  .hero-media::before{
+    background:
+      linear-gradient(180deg,
+        rgba(7,4,12,0.20) 0%,
+        rgba(7,4,12,0.70) 45%,
+        rgba(7,4,12,0.98) 95%
+      ),
+      linear-gradient(100deg,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.15) 60%
+      );
+  }
+  .hero-media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(to right,
+        rgba(7,4,12,0.85) 0%,
+        rgba(7,4,12,0.0) 90%
+      ),
+      linear-gradient(to left,
+        rgba(7,4,12,0.85) 0%,
+        rgba(7,4,12,0.0) 90%
+      ),
+      radial-gradient(ellipse 60% 45% at 15% 100%, rgba(168,85,247,0.25), transparent 70%);
+  }
 
   .hero-content{
     position:relative;
@@ -257,15 +253,15 @@
     opacity:0;
     animation:rise 0.9s 0.45s ease forwards;
   }
-.hero-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:18px;
-}
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+  }
+  .hero-actions .btn-primary{
+    margin-right:10px;
+  }
 
-.hero-actions .btn-primary{
-  margin-right:10px;
-}
   @keyframes rise{
     from{ opacity:0; transform:translateY(18px); }
     to{ opacity:1; transform:translateY(0); }
@@ -381,181 +377,157 @@
     object-position:50% 20%;
     clip-path:polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
   }
-  .about-photo .tag{
-    position:absolute;
-    bottom:-18px; left:-18px;
-    background:var(--black);
-    border:1px solid var(--line);
-    padding:12px 20px;
-    font-family:var(--display);
-    font-size:0.82rem;
-    font-weight:600;
-    color:var(--violet-bright);
-    clip-path:polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
-  }
 
   /* ---------- Media / Gallery ---------- */
+  .media{
+    background:var(--black);
+  }
 
-.media{
-  background:var(--black);
-}
+  .media .backdrop-grid{
+    position:absolute;
+    inset:0;
+    mask-image:linear-gradient(180deg, black, transparent 75%);
+  }
 
-.media .backdrop-grid{
-  position:absolute;
-  inset:0;
-  mask-image:linear-gradient(180deg, black, transparent 75%);
-}
+  .media .wrap{
+    position:relative;
+    z-index:1;
+  }
 
-.media .wrap{
-  position:relative;
-  z-index:1;
-}
+  .media-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:44px;
+  }
 
-.media-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:24px;
-  flex-wrap:wrap;
-  margin-bottom:44px;
-}
+  .photo-grid{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    gap:18px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    padding-bottom:10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 
-/* ===== HORIZONTAL GALLERY ROW ===== */
+  .photo-grid::-webkit-scrollbar {
+    display: none;
+  }
 
-.photo-grid{
+  .g-item{
+    position:relative;
+    overflow:hidden;
+    background:var(--purple-900);
+  }
 
-  display:flex;
-  flex-direction:row;
-  flex-wrap:nowrap;
-  gap:18px;
+  .g-photo{
+    flex:0 0 auto;
+    width:80vw;
+    max-width:420px;
+    aspect-ratio:4/3;
+    position:relative;
+    overflow:hidden;
+    border-radius:4px;
+    scroll-snap-align:start;
+  }
 
-  overflow-x:auto;
-  overflow-y:hidden;
+  .g-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.6s ease;
+  }
 
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
+  .g-photo:hover img{
+    transform:scale(1.06);
+  }
 
-  padding-bottom:10px;
+  .g-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+      200deg,
+      transparent 60%,
+      rgba(7,4,12,0.4)
+    );
+    pointer-events:none;
+  }
 
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
+  .reel-row{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
 
-.photo-grid::-webkit-scrollbar {
-  display: none;
-}
+  .g-reel{
+    width:clamp(150px, 22vw, 220px);
+    flex:0 0 auto;
+    aspect-ratio:9/16;
+    border:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    text-align:center;
+    padding:18px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(168,85,247,0.22), transparent 55%),
+      radial-gradient(circle at 75% 85%, rgba(255,95,210,0.16), transparent 55%),
+      linear-gradient(160deg, var(--purple-900), var(--black) 80%);
+    transition:border-color 0.3s ease;
+  }
 
-/* ===== IMAGE CARD ===== */
+  .g-reel:hover{
+    border-color:var(--violet-bright);
+  }
 
-.g-item{
-  position:relative;
-  overflow:hidden;
-  background:var(--purple-900);
-}
+  .g-reel .play{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:1.5px solid var(--violet-bright);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform 0.3s ease, background 0.3s ease;
+  }
 
-.g-photo{
-  flex:0 0 auto;
-  width:80vw;
-  max-width:420px;
-  aspect-ratio:4/3;
-  position:relative;
-  overflow:hidden;
-  border-radius:4px;
-  scroll-snap-align:start;
-}
+  .g-reel:hover .play{
+    transform:scale(1.08);
+    background:rgba(168,85,247,0.15);
+  }
 
-.g-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform 0.6s ease;
-}
+  .g-reel .play svg{
+    width:16px;
+    height:16px;
+    fill:var(--violet-bright);
+    margin-left:2px;
+  }
 
-.g-photo:hover img{
-  transform:scale(1.06);
-}
+  .g-reel small{
+    color:var(--ink-faint);
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+  }
 
-.g-photo::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    200deg,
-    transparent 60%,
-    rgba(7,4,12,0.4)
-  );
-  pointer-events:none;
-}
-
-/* ===== REELS (UNCHANGED) ===== */
-
-.reel-row{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.g-reel{
-  width:clamp(150px, 22vw, 220px);
-  flex:0 0 auto;
-  aspect-ratio:9/16;
-  border:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:16px;
-  text-align:center;
-  padding:18px;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(168,85,247,0.22), transparent 55%),
-    radial-gradient(circle at 75% 85%, rgba(255,95,210,0.16), transparent 55%),
-    linear-gradient(160deg, var(--purple-900), var(--black) 80%);
-  transition:border-color 0.3s ease;
-}
-
-.g-reel:hover{
-  border-color:var(--violet-bright);
-}
-
-.g-reel .play{
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  border:1.5px solid var(--violet-bright);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform 0.3s ease, background 0.3s ease;
-}
-
-.g-reel:hover .play{
-  transform:scale(1.08);
-  background:rgba(168,85,247,0.15);
-}
-
-.g-reel .play svg{
-  width:16px;
-  height:16px;
-  fill:var(--violet-bright);
-  margin-left:2px;
-}
-
-.g-reel small{
-  color:var(--ink-faint);
-  font-size:0.72rem;
-  letter-spacing:0.04em;
-}
-
-.g-reel p{
-  margin:0;
-  font-family:var(--display);
-  font-size:0.92rem;
-  font-weight:600;
-  color:var(--ink-dim);
-  max-width:16ch;
-}
+  .g-reel p{
+    margin:0;
+    font-family:var(--display);
+    font-size:0.92rem;
+    font-weight:600;
+    color:var(--ink-dim);
+    max-width:16ch;
+  }
 
   /* ---------- Enquiry ---------- */
   .enquiry{
@@ -621,16 +593,6 @@
     background:#180d29;
   }
   .field textarea{ min-height:110px; resize:vertical; }
-  .field select{
-    appearance:none;
-    -webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c186ff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 14px center;
-    background-size:16px;
-    padding-right:40px;
-  }
-  .field select option{ background:var(--purple-950); color:var(--ink); }
 
   .form-submit{
     width:100%;
@@ -648,7 +610,7 @@
     text-align:center;
     padding:40px 10px;
   }
-  .form-success.show{ display:block; }
+  .form-success.show{ display:block !important; }
   .form-success svg{ width:44px; height:44px; fill:var(--violet-bright); margin-bottom:16px; }
   .form-success h3{ font-family:var(--display); margin:0 0 8px; }
   .form-success p{ color:var(--ink-dim); margin:0; }
@@ -718,7 +680,6 @@
       transition:max-height 0.35s ease;
     }
     .nav-links.open{ max-height:320px; }
-    .nav-links .wrap-inner{ width:100%; }
     .nav-links a{
       width:100%;
       padding:16px clamp(20px,5vw,48px);
@@ -752,11 +713,10 @@
       <img src="logo.png" alt="AMPLFY logo">
       <span class="brand-name">AMPLFY</span>
     </a>
- <nav class="nav-links" id="navLinks">
-  <a href="#home">Home</a>
-  <a href="#media">Media</a>
-  <a href="#enquiry" class="nav-cta">Enquiry</a>
-</nav>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#media">Media</a>
+      <a href="#enquiry" class="nav-cta">Enquiry</a>
     </nav>
     <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
@@ -800,7 +760,6 @@
         <div class="frame">
           <img src="smart-wedding.jpg" alt="AMPLFY dressed smart for a formal wedding event">
         </div>
-     
       </div>
     </div>
   </section>
@@ -826,11 +785,10 @@
           <img src="action-1.jpg" alt="AMPLFY singer performing to a crowd at an outdoor festival">
           <span class="cap">Crowd favourite</span>
         </div>
-              <div class="g-item g-photo">
-  <img src="action-3.jpg" alt="AMPLFY live performance shot">
-</div>
+        <div class="g-item g-photo">
+          <img src="action-3.jpg" alt="AMPLFY live performance shot">
+        </div>
       </div>
-
 
       <div class="reel-row">
         <div class="g-item g-reel">
@@ -865,41 +823,48 @@
         </ul>
       </div>
 
-      <div id="formFields">
+      <form id="enquiryForm" class="form-card">
+        <div id="formFields">
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="from_name" required autocomplete="name">
+            </div>
 
-  <div class="form-row">
-    <div class="field">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required autocomplete="name">
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="reply_to" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field full">
+              <label for="date">Event date (if you know it)</label>
+              <input type="date" id="date" name="event_date">
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="message">Tell us about your event</label>
+            <textarea id="message" name="message" placeholder="Wedding / party / corporate, rough location, and what you're planning..."></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary form-submit">
+            Send message
+          </button>
+
+          <p class="form-note">
+            We’ll reply with availability and options for your event.
+          </p>
+        </div>
+
+        <div class="form-success" id="formSuccess">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <h3>Enquiry Sent!</h3>
+          <p>Thanks for getting in touch. We'll review your event details and get back to you within 48 hours.</p>
+        </div>
+      </form>
     </div>
-
-    <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required autocomplete="email">
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="field full">
-      <label for="date">Event date (if you know it)</label>
-      <input type="date" id="date" name="date">
-    </div>
-  </div>
-
-  <div class="field full">
-    <label for="message">Tell us about your event</label>
-    <textarea id="message" name="message" placeholder="Wedding / party / corporate, rough location, and what you're planning..."></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary form-submit">
-    Send message
-  </button>
-
-  <p class="form-note">
-    We’ll reply with availability and options for your event.
-  </p>
-
-</div>
   </section>
 
 </main>
@@ -934,6 +899,11 @@
 </footer>
 
 <script>
+  // Initialize EmailJS with your Public Key
+  (function () {
+    emailjs.init("U6frZEd5cttPWI-84");
+  })();
+
   // Mobile nav toggle
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
@@ -950,7 +920,7 @@
     });
   });
 
-  // Smooth scroll (native CSS handles most; JS fallback for older browsers)
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -962,15 +932,28 @@
     });
   });
 
-  // Enquiry form -- placeholder submit handling
+  // EmailJS Form Handling
   const form = document.getElementById('enquiryForm');
   const fields = document.getElementById('formFields');
   const success = document.getElementById('formSuccess');
+  const submitBtn = document.getElementById('submitBtn');
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    // Hook up your form backend / booking-platform endpoint here.
-    fields.style.display = 'none';
-    success.classList.add('show');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    emailjs.sendForm('service_imeqw4y', 'template_ybxewo4', this)
+      .then(() => {
+        fields.style.display = 'none';
+        success.classList.add('show');
+      }, (error) => {
+        alert('Failed to send enquiry. Please try again or email us directly.');
+        console.error('EmailJS Error:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send message';
+      });
   });
 
   // Footer year
